@@ -3,6 +3,8 @@ package it.bastio.resolver.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.bastio.resolver.constants.DiceConstants;
+
 public class Dice {
 	private List<String> x;
 	private List<String> y;
@@ -78,7 +80,37 @@ public class Dice {
 		this.zRotation = zRotation;
 	}
 
+	public int doRotation(String axis) {
+		int rotation = -1;
+		switch (axis.toUpperCase()) {
+		case DiceConstants.X:
+			rotation = this.doXRotation();
+			break;
+		case DiceConstants.Y:
+			rotation = this.doYRotation();
+			break;
+		case DiceConstants.Z:
+			rotation = this.doZRotation();
+			break;
+		}
+		return rotation;
+	}
+
 	public int doXRotation() {
-		return 0;
+		String first = this.x.get(0);
+		this.x.add(first);
+		return this.xRotation++;
+	}
+
+	public int doYRotation() {
+		String first = this.y.get(0);
+		this.y.add(first);
+		return this.yRotation++;
+	}
+
+	public int doZRotation() {
+		String first = this.z.get(0);
+		this.z.add(first);
+		return this.zRotation++;
 	}
 }
