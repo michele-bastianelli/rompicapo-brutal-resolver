@@ -118,6 +118,39 @@ public class Dice {
 		}
 	}
 
+	/**
+	 * Restituisce il valore di rotazione dell'asse corrente.
+	 * 
+	 * @returnint valore rotazione.
+	 */
+	public int getCurrentAxisRotation() {
+		switch (this.orientation) {
+		case DiceConstants.X:
+			return this.xRotation;
+		case DiceConstants.Y:
+			return this.yRotation;
+		case DiceConstants.Z:
+			return this.zRotation;
+		default:
+			return -1;
+		}
+	}
+
+	//TODO GET POSITION
+	/**
+	 * Restituisce la descriione della posizione attuale del dado
+	 * comprensiva di: Asse, Rotazione, elenco di colori.
+	 * 
+	 * @return String descrizione
+	 */
+	public String getPosition() {
+		String position = "Axis: " + this.getOrientation() + "\n"
+			+ "Rotation: " + String.valueOf(this.getCurrentAxisRotation() + "\n"
+			+ "Colori: " + this.getCurrentAxis().toString());
+
+		return position;
+	}
+
 	public String getOrientation() {
 		return orientation;
 	}
