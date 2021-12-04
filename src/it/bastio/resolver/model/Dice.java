@@ -98,6 +98,26 @@ public class Dice {
 		return this.zRotation;
 	}
 
+	//TODO getCurrentAxis
+	/**
+	 * verifica l'orientation del dado 
+	 * e restituisce l'asse corrispondente
+	 * 
+	 * @return asse di rotazione
+	 */
+	public List<String> getCurrentAxis() {
+		switch (this.orientation) {
+		case DiceConstants.X:
+			return this.getX();
+		case DiceConstants.Y:
+			return this.getY();
+		case DiceConstants.Z:
+			return this.getZ();
+		default:
+			return new ArrayList<String>();
+		}
+	}
+
 	public String getOrientation() {
 		return orientation;
 	}
