@@ -6,41 +6,52 @@ import java.util.List;
 import it.bastio.resolver.constants.DiceConstants;
 
 public class Dice {
-	private String orientation;
+	private List<String> axis;
 	private List<String> x;
 	private List<String> y;
 	private List<String> z;
-	private int xRotation;
-	private int yRotation;
-	private int zRotation;
+	private int rotation;
 
 	public Dice() {
-		this.orientation = DiceConstants.X;
+		this.axis = new ArrayList<String>();
+		this.axis.add(DiceConstants.X);
+		this.axis.add(DiceConstants.Y);
+		this.axis.add(DiceConstants.Z);
 		this.x = new ArrayList<String>();
 		this.y = new ArrayList<String>();
 		this.z = new ArrayList<String>();
-		this.xRotation = 0;
-		this.yRotation = 0;
-		this.zRotation = 0;
+		this.rotation = 0;
 	}
 
 	public Dice(List<String> x, List<String> y, List<String> z) {
-		this.orientation = DiceConstants.X;
+		this.axis = new ArrayList<String>();
+		this.axis.add(DiceConstants.X);
+		this.axis.add(DiceConstants.Y);
+		this.axis.add(DiceConstants.Z);
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.xRotation = 0;
-		this.yRotation = 0;
-		this.zRotation = 0;
+		this.rotation = 0;
 	}
 
+	public String nextState() {
+		if (this.rotation == 4) {
+			String first = this.axis.remove(0);
+			this.axis.add(first);
+			this.rotation = 0;
+		}
+		else {
+			doRotation(this.axis.get(0));
+		}
+		return this.getPosition();
+	}
 	/**
 	 * Esegue una rotazione del dado sull'asse specificato.
 	 * 
 	 * @param axis = asse di rotazione.
 	 * @return numero della rotazione
 	 */
-	public int doRotation(String axis) {
+	private int doRotation(String axis) {
 		int rotation = -1;
 		switch (axis.toUpperCase()) {
 		case DiceConstants.X:
@@ -56,46 +67,46 @@ public class Dice {
 		return rotation;
 	}
 
-	public int doXRotation() {
-		int rotation = this.xRotation;
-		String first = this.x.get(0);
+	private int doXRotation() {
+		int rot = this.rotation;
+		String first = this.x.remove(0);
 		this.x.add(first);
-		if (rotation == 3) {
-			rotation = 0;
+		if (rot == 3) {
+			rot = 0;
 		}
 		else {
-			rotation++;
+			rot++;
 		}
-		this.xRotation = rotation;
-		return this.xRotation;
+		this.rotation = rot;
+		return this.rotation;
 	}
 
-	public int doYRotation() {
-		int rotation = this.yRotation;
-		String first = this.y.get(0);
+	private int doYRotation() {
+		int rot = this.rotation;
+		String first = this.y.remove(0);
 		this.y.add(first);
-		if (rotation == 3) {
-			rotation = 0;
+		if (rot == 3) {
+			rot = 0;
 		}
 		else {
-			rotation++;
+			rot++;
 		}
-		this.yRotation = rotation;
-		return this.yRotation;
+		this.rotation = rot;
+		return this.rotation;
 	}
 
-	public int doZRotation() {
-		int rotation = this.zRotation;
-		String first = this.z.get(0);
+	private int doZRotation() {
+		int rot = this.rotation;
+		String first = this.z.remove(0);
 		this.z.add(first);
-		if (rotation == 3) {
-			rotation = 0;
+		if (rot == 3) {
+			rot = 0;
 		}
 		else {
-			rotation++;
+			rot++;
 		}
-		this.zRotation = rotation;
-		return this.zRotation;
+		this.rotation = rot;
+		return this.rotation;
 	}
 
 	//TODO getCurrentAxis
@@ -106,7 +117,7 @@ public class Dice {
 	 * @return asse di rotazione
 	 */
 	public List<String> getCurrentAxis() {
-		switch (this.orientation) {
+		switch (this.axis.get(0)) {
 		case DiceConstants.X:
 			return this.getX();
 		case DiceConstants.Y:
@@ -115,24 +126,6 @@ public class Dice {
 			return this.getZ();
 		default:
 			return new ArrayList<String>();
-		}
-	}
-
-	/**
-	 * Restituisce il valore di rotazione dell'asse corrente.
-	 * 
-	 * @returnint valore rotazione.
-	 */
-	public int getCurrentAxisRotation() {
-		switch (this.orientation) {
-		case DiceConstants.X:
-			return this.xRotation;
-		case DiceConstants.Y:
-			return this.yRotation;
-		case DiceConstants.Z:
-			return this.zRotation;
-		default:
-			return -1;
 		}
 	}
 
@@ -145,18 +138,14 @@ public class Dice {
 	 */
 	public String getPosition() {
 		String position = "Axis: " + this.getOrientation() + "\n"
-			+ "Rotation: " + String.valueOf(this.getCurrentAxisRotation() + "\n"
-			+ "Colori: " + this.getCurrentAxis().toString());
+			+ "Rotation: " + String.valueOf(this.rotation) + "\n"
+			+ "Colori: " + this.getCurrentAxis().toString();
 
 		return position;
 	}
 
 	public String getOrientation() {
-		return orientation;
-	}
-
-	public void setOrientation(String orientation) {
-		this.orientation = orientation;
+		return axis.get(0);
 	}
 
 	public List<String> getX() {
@@ -183,27 +172,4 @@ public class Dice {
 		this.z = z;
 	}
 
-	public int getxRotation() {
-		return xRotation;
-	}
-
-	public void setxRotation(int xRotation) {
-		this.xRotation = xRotation;
-	}
-
-	public int getyRotation() {
-		return yRotation;
-	}
-
-	public void setyRotation(int yRotation) {
-		this.yRotation = yRotation;
-	}
-
-	public int getzRotation() {
-		return zRotation;
-	}
-
-	public void setzRotation(int zRotation) {
-		this.zRotation = zRotation;
-	}
 }
