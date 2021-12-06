@@ -35,7 +35,7 @@ public class Dice {
 	}
 
 	public String nextState() {
-		if (this.rotation == 4) {
+		if (this.rotation == DiceConstants.ROTATION_NUMBER) {
 			String first = this.axis.remove(0);
 			this.axis.add(first);
 			this.rotation = 0;
@@ -71,7 +71,7 @@ public class Dice {
 		int rot = this.rotation;
 		String first = this.x.remove(0);
 		this.x.add(first);
-		if (rot == 3) {
+		if (rot == DiceConstants.ROTATION_NUMBER) {
 			rot = 0;
 		}
 		else {
@@ -85,7 +85,7 @@ public class Dice {
 		int rot = this.rotation;
 		String first = this.y.remove(0);
 		this.y.add(first);
-		if (rot == 3) {
+		if (rot == DiceConstants.ROTATION_NUMBER) {
 			rot = 0;
 		}
 		else {
@@ -99,7 +99,7 @@ public class Dice {
 		int rot = this.rotation;
 		String first = this.z.remove(0);
 		this.z.add(first);
-		if (rot == 3) {
+		if (rot == DiceConstants.ROTATION_NUMBER) {
 			rot = 0;
 		}
 		else {

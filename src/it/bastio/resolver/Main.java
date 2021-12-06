@@ -36,12 +36,13 @@ public class Main {
 				+ d1.getPosition());
 		System.out.println("###################################");
 
-		for (int i = 0; i < 15; i++) {
+		for (int i = 0; i < 14; i++) {
 			
 			d1.nextState();
 			
 			System.out.println(d1.getPosition());
-			System.out.println("###################################");
+			System.out.println("################################### i=" 
+					+ String.valueOf(i));
 		}
 
 		Set<String> set = new HashSet<String>(asseY);

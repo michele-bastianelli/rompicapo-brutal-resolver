@@ -9,9 +9,13 @@ public class Game {
 
 	public String play(Dice d1, Dice d2, Dice d3, Dice d4) {
 		String solution = "";
+		int move = 0;
 		boolean isCorrect = false;
-		isCorrect = _checkSolution(d1, d2, d3, d4);
 
+		for (int i = 0; i < 14; i++) {
+			isCorrect = _checkSolution(d1, d2, d3, d4);
+			
+		}
 		return solution;
 	}
 
