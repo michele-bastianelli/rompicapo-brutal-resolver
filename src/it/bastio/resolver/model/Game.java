@@ -13,8 +13,22 @@ public class Game {
 		boolean isCorrect = false;
 
 		for (int i = 0; i < 14; i++) {
-			isCorrect = _checkSolution(d1, d2, d3, d4);
-			
+			for (int j = 0; j < 14; j++) {
+				for (int j2 = 0; j2 < 14; j2++) {
+					for (int k = 0; k < 14; k++) {
+						isCorrect = _checkSolution(d1, d2, d3, d4);
+						move++;
+						d4.nextState();
+						if(isCorrect) {
+							solution = _printSolution(d1, d2, d3, d4, move);
+							break;
+						}
+					}
+					d3.nextState();
+				}
+				d2.nextState();
+			}
+			d1.nextState();
 		}
 		return solution;
 	}
@@ -46,5 +60,13 @@ public class Game {
 		}
 
 		return !hasDuplicate;
+	}
+
+	private String _printSolution(Dice d1, Dice d2, Dice d3, Dice d4, int move) {
+		String divisore = "\n--------------------------\n";
+		String solution = "mosse=" + String.valueOf(move) + "\n" 
+			+ d1.getPosition() + divisore + d2.getPosition() + divisore 
+			+ d3.getPosition() + divisore + d4.getPosition();
+		return solution;
 	}
 }
