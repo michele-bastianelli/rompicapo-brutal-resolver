@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import it.bastio.resolver.constants.DiceConstants;
+
 public class Game {
 
 	public String play(Dice d1, Dice d2, Dice d3, Dice d4) {
@@ -12,18 +14,20 @@ public class Game {
 		int move = 0;
 		boolean isCorrect = false;
 
-		for (int i = 0; i < 14; i++) {
-			for (int j = 0; j < 14; j++) {
-				for (int j2 = 0; j2 < 14; j2++) {
-					for (int k = 0; k < 14; k++) {
+		for (int i = 0; i < 15; i++) {
+			for (int j = 0; j < 15; j++) {
+				for (int j2 = 0; j2 < 15; j2++) {
+					do {
 						isCorrect = _checkSolution(d1, d2, d3, d4);
-						move++;
-						d4.nextState();
 						if(isCorrect) {
 							solution = _printSolution(d1, d2, d3, d4, move);
 							break;
 						}
-					}
+						d4.nextState();
+						System.out.println("Mossa n°: " + move);
+						move++;
+					} while (d4.getOrientation().equalsIgnoreCase(
+							DiceConstants.X) && d4.getRotation() == 0);
 					d3.nextState();
 				}
 				d2.nextState();
@@ -34,8 +38,8 @@ public class Game {
 	}
 
 	//TODO CHECK POSITION
-	private boolean _checkSolution(Dice d1, Dice d2, Dice d3, Dice d4) {
-		boolean hasDuplicate = false;
+	public boolean _checkSolution(Dice d1, Dice d2, Dice d3, Dice d4) {
+		boolean isUnique = true;
 
 		List<String> d1Colors = d1.getCurrentAxis();
 		List<String> d2Colors = d2.getCurrentAxis();
@@ -56,17 +60,18 @@ public class Game {
 
 			Set<String> set = new HashSet<String>(iPositions);
 
-			hasDuplicate = iPositions.size() != set.size();
+			isUnique = (set.size() == DiceConstants.ROTATION_NUMBER) 
+				&& isUnique;
 		}
 
-		return !hasDuplicate;
+		return isUnique;
 	}
 
 	private String _printSolution(Dice d1, Dice d2, Dice d3, Dice d4, int move) {
 		String divisore = "\n--------------------------\n";
 		String solution = "mosse=" + String.valueOf(move) + "\n" 
-			+ d1.getPosition() + divisore + d2.getPosition() + divisore 
-			+ d3.getPosition() + divisore + d4.getPosition();
+			+ d1.toString() + divisore + d2.toString() + divisore 
+			+ d3.toString() + divisore + d4.toString();
 		return solution;
 	}
 }

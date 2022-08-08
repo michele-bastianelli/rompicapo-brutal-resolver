@@ -43,7 +43,7 @@ public class Dice {
 		else {
 			doRotation(this.axis.get(0));
 		}
-		return this.getPosition();
+		return this.toString();
 	}
 	/**
 	 * Esegue una rotazione del dado sull'asse specificato.
@@ -136,7 +136,7 @@ public class Dice {
 	 * 
 	 * @return String descrizione
 	 */
-	public String getPosition() {
+	public String toString() {
 		String position = "Axis: " + this.getOrientation() + "\n"
 			+ "Rotation: " + String.valueOf(this.rotation) + "\n"
 			+ "Colori: " + this.getCurrentAxis().toString();
@@ -170,6 +170,10 @@ public class Dice {
 
 	public void setZ(List<String> z) {
 		this.z = z;
+	}
+
+	public int getRotation() {
+		return rotation;
 	}
 
 }
